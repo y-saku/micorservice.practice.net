@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+    client:
+        container_name: blazor
+        build:
+            context: ./blazor
+            dockerfile: Dockerfile
+        volumes:
+            - ./app:/app
+        ports:
+            - "5100:80"
+        tty: true
+        privileged: true
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://0.0.0.0:80
+        depends_on:
+          - service01          
+          - service02          
+    service01:
+        container_name: service01
+        build:
+            context: ./service01
+            dockerfile: Dockerfile
+        volumes:
+            - ./app:/app
+        ports:
+            - "5101:80"
+        tty: true
+        privileged: true
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://0.0.0.0:80
+    service02:
+        container_name: service02
+        build:
+            context: ./service02
+            dockerfile: Dockerfile
+        volumes:
+            - ./app:/app
+        ports:
+            - "5102:80"
+        tty: true
+        privileged: true        
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://0.0.0.0:80
